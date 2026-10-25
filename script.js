@@ -15,7 +15,6 @@ const contohGuru = [
   { id: "G002", nama: "Siti Rahma", mapel: "Bahasa Indonesia" },
   { id: "G003", nama: "Andi Pratama", mapel: "Fisika" },
   { id: "G004", nama: "Dewi Lestari", mapel: "Biologi" }
-  { id: "G005", nama: "ahmad roni", mapel: "olga" } 
 ];
 
 function bacaData(kunci, dataAwal) {
