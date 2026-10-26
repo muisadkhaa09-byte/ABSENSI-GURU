@@ -70,6 +70,12 @@ textarea:focus-visible {
   padding: 0 4px 28px;
 }
 
+.brand img {
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+}
+
 .brand-logo {
   display: grid;
   place-items: center;
