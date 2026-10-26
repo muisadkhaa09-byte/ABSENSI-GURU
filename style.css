@@ -771,3 +771,93 @@ tbody tr:last-child td {
     padding: 9px 10px;
   }
 }
+/* ===== HALAMAN LOGIN FIREBASE ===== */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #e7f5ec, #f5f8f6);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #e1e9e3;
+  border-radius: 18px;
+  box-shadow: 0 10px 35px rgba(20, 60, 40, 0.1);
+}
+
+.login-logo {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  background: #176b45;
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.login-card h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.login-card p {
+  color: #718078;
+  line-height: 1.6;
+}
+
+.login-card label {
+  display: block;
+  margin: 16px 0 7px;
+  font-weight: 700;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d9e3dc;
+  border-radius: 8px;
+}
+
+.login-card button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #176b45;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-card button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+#loginMessage {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+/* Dashboard tidak ditampilkan sebelum login berhasil */
+.app {
+  display: none;
+}
+
+.app.authenticated {
+  display: block;
+}
+
+[hidden] {
+  display: none !important;
+}
