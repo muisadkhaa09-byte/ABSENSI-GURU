@@ -73,8 +73,8 @@ textarea:focus-visible {
 .brand-logo {
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
+  width: 10px;
+  height: 10px;
   border-radius: 13px;
   background: var(--green);
   color: white;
