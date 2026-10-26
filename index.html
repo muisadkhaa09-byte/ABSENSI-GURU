@@ -6,92 +6,174 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#176b45">
   <title>E-Absensi Kehadiran Guru</title>
+
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
+
+  <style>
+    /* Pengaturan logo IBS */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 4px 28px;
+      min-width: 0;
+    }
+
+    .brand-logo-img {
+      width: 42px;
+      height: 42px;
+      max-width: 42px;
+      flex: 0 0 42px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .brand-text p {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
 </head>
+
 <body>
   <div class="app">
+
     <aside class="sidebar" id="sidebar">
+
+      <!-- LOGO IBS -->
       <div class="brand">
-        <img src="images.png" alt="logo E-Absen">
-        <h2></h2><div class="SMA Plus Alfalah Almakky">E</div></h2>
-        <div>
+        <img
+          class="brand-logo-img"
+          src="images.png"
+          alt="Logo IBS"
+        >
+
+        <div class="brand-text">
           <h2>E-Absensi</h2>
           <p>Absen Kehadiran Guru</p>
         </div>
       </div>
 
       <p class="menu-title">MENU UTAMA</p>
+
       <nav class="navigation">
-        <button class="nav-link active" data-page="dashboard">▦ Dashboard</button>
-        <button class="nav-link" data-page="guru">♙ Data Guru</button>
-        <button class="nav-link" data-page="absensi">✓ Absensi Guru</button>
-        <button class="nav-link" data-page="rekap">▤ Rekap Laporan</button>
+        <button class="nav-link active" data-page="dashboard">
+          ▦ Dashboard
+        </button>
+
+        <button class="nav-link" data-page="guru">
+          ♙ Data Guru
+        </button>
+
+        <button class="nav-link" data-page="absensi">
+          ✓ Absensi Guru
+        </button>
+
+        <button class="nav-link" data-page="rekap">
+          ▤ Rekap Laporan
+        </button>
       </nav>
 
       <div class="sidebar-note">
         <strong>E-Absensi Guru SMA</strong>
         <p>Sistem pencatatan kehadiran digital.</p>
       </div>
+
     </aside>
 
     <main class="main-content">
+
       <header class="topbar">
-        <button id="menuToggle" class="menu-toggle" aria-label="Buka menu">☰</button>
+        <button
+          id="menuToggle"
+          class="menu-toggle"
+          aria-label="Buka menu"
+        >☰</button>
+
         <div>
           <h1 id="pageTitle">Dashboard</h1>
           <p id="currentDate" class="muted"></p>
         </div>
+
         <div class="demo-label">MODE PERCOBAAN</div>
       </header>
 
-      <div id="notice" class="notice" role="status" aria-live="polite"></div>
+      <div
+        id="notice"
+        class="notice"
+        role="status"
+        aria-live="polite"
+      ></div>
 
       <!-- DASHBOARD -->
       <section class="page active" id="dashboard">
+
         <div class="welcome">
           <div>
             <h2>SELAMAT DATANG!</h2>
             <p>HAI DEWAN GURU SMA PLUS ALFALAH ALMAKKY.</p>
           </div>
-          <button class="btn btn-primary" data-go="absensi">+ Catat Absensi</button>
+
+          <button class="btn btn-primary" data-go="absensi">
+            + Catat Absensi
+          </button>
         </div>
 
         <div class="stats-grid">
+
           <article class="stat-card">
             <span class="stat-icon green">♙</span>
             <p>Total Guru</p>
             <h2 id="totalGuru">0</h2>
             <small>Guru terdaftar</small>
           </article>
+
           <article class="stat-card">
             <span class="stat-icon blue">✓</span>
             <p>Hadir</p>
             <h2 id="totalHadir">0</h2>
             <small>Hadir hari ini</small>
           </article>
+
           <article class="stat-card">
             <span class="stat-icon orange">◷</span>
             <p>Terlambat</p>
             <h2 id="totalTerlambat">0</h2>
             <small>Terlambat hari ini</small>
           </article>
+
           <article class="stat-card">
             <span class="stat-icon red">▤</span>
             <p>Izin / Sakit</p>
             <h2 id="totalIzinSakit">0</h2>
             <small>Izin atau sakit hari ini</small>
           </article>
+
         </div>
 
         <div class="panel">
           <div class="panel-heading">
             <div>
               <h2>Persentase Kehadiran</h2>
-              <p class="muted">Berdasarkan guru yang sudah tercatat hari ini.</p>
+              <p class="muted">
+                Berdasarkan guru yang sudah tercatat hari ini.
+              </p>
             </div>
+
             <strong id="persentaseHadir">0%</strong>
           </div>
+
           <div class="progress-track">
             <div class="progress-bar" id="progressBar"></div>
           </div>
@@ -101,10 +183,16 @@
           <div class="panel-heading">
             <div>
               <h2>Absensi Terbaru</h2>
-              <p class="muted">Catatan kehadiran terbaru pada tanggal hari ini.</p>
+              <p class="muted">
+                Catatan kehadiran terbaru pada tanggal hari ini.
+              </p>
             </div>
-            <button class="btn btn-light" data-go="rekap">Lihat Rekap</button>
+
+            <button class="btn btn-light" data-go="rekap">
+              Lihat Rekap
+            </button>
           </div>
+
           <div class="table-wrap">
             <table>
               <thead>
@@ -115,14 +203,17 @@
                   <th>Status</th>
                 </tr>
               </thead>
+
               <tbody id="dashboardTable"></tbody>
             </table>
           </div>
         </div>
+
       </section>
 
       <!-- DATA GURU -->
       <section class="page" id="guru">
+
         <div class="section-heading">
           <div>
             <h2>Data Guru</h2>
@@ -132,30 +223,58 @@
 
         <div class="panel">
           <h3>Tambah Guru</h3>
+
           <form id="guruForm" class="form-grid">
+
             <label>
               ID Guru
-              <input id="guruId" required maxlength="20" placeholder="Contoh: G001">
+              <input
+                id="guruId"
+                required
+                maxlength="20"
+                placeholder="Contoh: G001"
+              >
             </label>
+
             <label>
               Nama Lengkap
-              <input id="guruNama" required maxlength="100" placeholder="Nama guru">
+              <input
+                id="guruNama"
+                required
+                maxlength="100"
+                placeholder="Nama guru"
+              >
             </label>
+
             <label>
               Mata Pelajaran / Jabatan
-              <input id="guruMapel" required maxlength="100" placeholder="Contoh: Matematika">
+              <input
+                id="guruMapel"
+                required
+                maxlength="100"
+                placeholder="Contoh: Matematika"
+              >
             </label>
+
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Simpan Guru</button>
+              <button type="submit" class="btn btn-primary">
+                Simpan Guru
+              </button>
             </div>
+
           </form>
         </div>
 
         <div class="panel">
           <div class="panel-heading">
             <h3>Daftar Guru</h3>
-            <input id="cariGuru" class="search-input" placeholder="Cari nama atau ID...">
+            <input
+              id="cariGuru"
+              class="search-input"
+              placeholder="Cari nama atau ID..."
+            >
           </div>
+
           <div class="table-wrap">
             <table>
               <thead>
@@ -166,38 +285,48 @@
                   <th>Aksi</th>
                 </tr>
               </thead>
+
               <tbody id="guruTable"></tbody>
             </table>
           </div>
         </div>
+
       </section>
 
-      <!-- ABSENSI -->
+      <!-- ABSENSI GURU -->
       <section class="page" id="absensi">
+
         <div class="section-heading">
           <div>
             <h2>Absensi Guru</h2>
-            <p class="muted">Catat kehadiran guru pada tanggal yang dipilih.</p>
+            <p class="muted">
+              Catat kehadiran guru pada tanggal yang dipilih.
+            </p>
           </div>
         </div>
 
         <div class="panel">
           <h3>Formulir Absensi</h3>
+
           <form id="absensiForm" class="form-grid">
+
             <label>
               Nama Guru
               <select id="absensiGuru" required>
                 <option value="">-- Pilih Guru --</option>
               </select>
             </label>
+
             <label>
               Tanggal
               <input type="date" id="absensiTanggal" required>
             </label>
+
             <label>
               Jam Check-in
               <input type="time" id="absensiJam" required>
             </label>
+
             <label>
               Status Kehadiran
               <select id="absensiStatus" required>
@@ -207,54 +336,85 @@
                 <option value="Sakit">Sakit</option>
               </select>
             </label>
+
             <label class="full-width">
               Keterangan (opsional)
-              <textarea id="absensiKeterangan" rows="3" maxlength="300"
-                placeholder="Keterangan jika diperlukan"></textarea>
+              <textarea
+                id="absensiKeterangan"
+                rows="3"
+                maxlength="300"
+                placeholder="Keterangan jika diperlukan"
+              ></textarea>
             </label>
+
             <div class="form-actions full-width">
-              <button type="submit" class="btn btn-primary">Simpan Absensi</button>
-              <button type="reset" class="btn btn-light" id="resetAbsensi">Reset Form</button>
+              <button type="submit" class="btn btn-primary">
+                Simpan Absensi
+              </button>
+
+              <button
+                type="reset"
+                class="btn btn-light"
+                id="resetAbsensi"
+              >
+                Reset Form
+              </button>
             </div>
+
           </form>
+
           <p class="helper-text">
             Prototipe ini memungkinkan pencatatan untuk tanggal yang dipilih.
-            Jam dan status harus diperiksa petugas; sistem demo tidak membuktikan identitas guru.
+            Jam dan status harus diperiksa petugas; sistem demo tidak
+            membuktikan identitas guru.
           </p>
         </div>
 
         <div class="panel">
           <h3>Petunjuk Penggunaan</h3>
+
           <ol class="instructions">
             <li>Pastikan guru sudah terdaftar pada menu Data Guru.</li>
             <li>Pilih nama guru, tanggal, dan jam pencatatan.</li>
             <li>Pilih status sesuai aturan sekolah.</li>
             <li>Isi keterangan jika diperlukan.</li>
-            <li>Klik Simpan Absensi dan periksa hasilnya pada Rekap Laporan.</li>
+            <li>
+              Klik Simpan Absensi dan periksa hasilnya pada Rekap Laporan.
+            </li>
           </ol>
         </div>
+
       </section>
 
-      <!-- REKAP -->
+      <!-- REKAP LAPORAN -->
       <section class="page" id="rekap">
+
         <div class="section-heading">
           <div>
             <h2>Rekap Laporan</h2>
-            <p class="muted">Cari dan unduh catatan kehadiran guru.</p>
+            <p class="muted">
+              Cari dan unduh catatan kehadiran guru.
+            </p>
           </div>
-          <button class="btn btn-primary" id="exportCSV">↓ Unduh CSV</button>
+
+          <button class="btn btn-primary" id="exportCSV">
+            ↓ Unduh CSV
+          </button>
         </div>
 
         <div class="panel">
           <div class="filter-grid">
+
             <label>
               Dari Tanggal
               <input type="date" id="filterMulai">
             </label>
+
             <label>
               Sampai Tanggal
               <input type="date" id="filterSelesai">
             </label>
+
             <label>
               Status
               <select id="filterStatus">
@@ -265,34 +425,50 @@
                 <option value="Sakit">Sakit</option>
               </select>
             </label>
+
             <label>
               Cari Guru
-              <input id="filterNama" placeholder="Nama atau ID guru">
+              <input
+                id="filterNama"
+                placeholder="Nama atau ID guru"
+              >
             </label>
+
           </div>
+
           <div class="form-actions">
-            <button id="terapkanFilter" class="btn btn-primary">Terapkan Filter</button>
-            <button id="resetFilter" class="btn btn-light">Reset Filter</button>
+            <button id="terapkanFilter" class="btn btn-primary">
+              Terapkan Filter
+            </button>
+
+            <button id="resetFilter" class="btn btn-light">
+              Reset Filter
+            </button>
           </div>
         </div>
 
         <div class="stats-grid report-stats">
+
           <article class="stat-card">
             <p>Total Catatan</p>
             <h2 id="rekapTotal">0</h2>
           </article>
+
           <article class="stat-card">
             <p>Hadir</p>
             <h2 id="rekapHadir">0</h2>
           </article>
+
           <article class="stat-card">
             <p>Terlambat</p>
             <h2 id="rekapTerlambat">0</h2>
           </article>
+
           <article class="stat-card">
             <p>Izin / Sakit</p>
             <h2 id="rekapIzinSakit">0</h2>
           </article>
+
         </div>
 
         <div class="panel">
@@ -300,6 +476,7 @@
             <h3>Riwayat Absensi</h3>
             <span class="muted" id="jumlahHasil">0 catatan</span>
           </div>
+
           <div class="table-wrap">
             <table>
               <thead>
@@ -313,15 +490,18 @@
                   <th>Aksi</th>
                 </tr>
               </thead>
+
               <tbody id="rekapTable"></tbody>
             </table>
           </div>
         </div>
+
       </section>
 
       <footer class="footer">
         E-Absensi Guru SMA · by @muisadkhaa._
       </footer>
+
     </main>
   </div>
 </body>
