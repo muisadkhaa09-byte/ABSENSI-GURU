@@ -743,15 +743,3 @@ tbody tr:last-child td {
     padding: 9px 10px;
   }
 }
-
-
-/* Mengecilkan logo IBS */
-.logo img,
-.brand img,
-.sidebar-logo img,
-img.logo {
-  width: 45px !important;
-  height: 45px !important;
-  max-width: 45px !important;
-  object-fit: contain;
-}
