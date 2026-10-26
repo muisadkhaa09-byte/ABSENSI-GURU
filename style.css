@@ -70,9 +70,9 @@ textarea:focus-visible {
   padding: 0 4px 28px;
 }
 
-.brand image.png {
-    width: 62px;
-    height: 62px;
+.image.png {
+    width: 32px;
+    height:32px;
     object-fit: contain;
 }
 
@@ -87,13 +87,6 @@ textarea:focus-visible {
   font-size: 25px;
   font-weight: 80;
 }
-
-.image.png {
-  display: grid;
-  place-items: center;
-  width: 10px
-  height: 10px
-  border-radius: 13px
 
 .brand h2 {
   margin: 0;
