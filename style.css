@@ -79,7 +79,7 @@ textarea:focus-visible {
   background: var(--green);
   color: white;
   font-size: 25px;
-  font-weight: 800;
+  font-weight: 80;
 }
 
 .brand h2 {
