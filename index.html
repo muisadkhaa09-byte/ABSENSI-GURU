@@ -117,6 +117,44 @@
     alt="Logo sekolah"
   >
 </div>
+      
+<body>
+  <!-- HALAMAN LOGIN -->
+  <section id="loginScreen" class="login-screen" hidden>
+    <form id="loginForm" class="login-card">
+      <h1>E-Absensi Guru SMA</h1>
+      <p>Silakan login menggunakan akun terdaftar.</p>
+
+      <label for="loginEmail">Email</label>
+      <input
+        id="loginEmail"
+        type="email"
+        placeholder="nama@email.com"
+        autocomplete="username"
+        required
+      >
+
+      <label for="loginPassword">Kata Sandi</label>
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Masukkan kata sandi"
+        autocomplete="current-password"
+        required
+      >
+
+      <button id="loginButton" type="submit">
+        Masuk
+      </button>
+
+      <p id="loginMessage" role="status"></p>
+    </form>
+
+    <!-- FORM PENDAFTARAN GURU DITAMBAHKAN TERPISAH NANTI -->
+  </section>
+
+  <div class="app">
+
       <h1>E-Absensi Guru SMA</h1>
       <p>Silakan masuk menggunakan akun yang terdaftar.</p>
 
@@ -607,5 +645,6 @@
   <script type="module" src="./firebase-config.js"></script>
   <script type="module" src="./firebase-test.js"></script>
   <script type="module" src="./auth-gate.js"></script>
+  <script type="module" src="./guru-register.js"></script>
 </body>
 </html>
