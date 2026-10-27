@@ -51,6 +51,66 @@
   <!-- HALAMAN LOGIN BARU -->
   <section id="loginScreen" class="login-screen">
     <form id="loginForm" class="login-card">
+      
+<!-- FORM PENDAFTARAN GURU -->
+<form id="registerForm" class="login-card" hidden>
+  <h2>Daftar Akun Guru</h2>
+  <p>Buat akun untuk mengakses E-Absensi Guru SMA.</p>
+
+  <label for="registerNama">Nama lengkap</label>
+  <input
+    id="registerNama"
+    type="text"
+    placeholder="Masukkan nama lengkap"
+    autocomplete="name"
+    required
+  >
+
+  <label for="registerEmail">Email</label>
+  <input
+    id="registerEmail"
+    type="email"
+    placeholder="nama@email.com"
+    autocomplete="email"
+    required
+  >
+
+  <label for="registerPassword">Kata sandi</label>
+  <input
+    id="registerPassword"
+    type="password"
+    placeholder="Minimal 6 karakter"
+    minlength="6"
+    autocomplete="new-password"
+    required
+  >
+
+  <label for="registerPasswordConfirm">Ulangi kata sandi</label>
+  <input
+    id="registerPasswordConfirm"
+    type="password"
+    placeholder="Ulangi kata sandi"
+    minlength="6"
+    autocomplete="new-password"
+    required
+  >
+  <button id="registerButton" type="submit">
+    Daftar sebagai Guru
+  </button>
+
+  <p id="registerMessage" role="status"></p>
+
+  <button id="backToLogin" type="button" class="btn btn-light">
+    Kembali ke Login
+  </button>
+</form>
+
+<p id="showRegisterWrap" style="text-align:center">
+  Belum punya akun Guru?
+  <button id="showRegister" type="button">
+    Daftar di sini
+  </button>
+</p>
 <div class="login-logo">
   <img
     src="./images.png"
