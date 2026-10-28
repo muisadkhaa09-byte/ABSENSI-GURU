@@ -52,106 +52,91 @@
 
     <form id="loginForm" class="login-card">
       
-<!-- FORM PENDAFTARAN GURU -->
-<form id="registerForm" class="login-card" hidden>
-  <h2>Daftar Akun Guru</h2>
-  <p>Buat akun untuk mengakses E-Absensi Guru SMA.</p>
 
-  <label for="registerNama">Nama lengkap</label>
-  <input
-    id="registerNama"
-    type="text"
-    placeholder="Masukkan nama lengkap"
-    autocomplete="name"
-    required
-  >
+<!-- HALAMAN LOGIN DAN PENDAFTARAN -->
+<section id="loginScreen" class="login-screen">
+  <form id="loginForm" class="login-card">
+    <h2>Login E-Absensi Guru SMA</h2>
+    <p>Masuk menggunakan akun yang sudah terdaftar.</p>
 
-  <label for="registerEmail">Email</label>
-  <input
-    id="registerEmail"
-    type="email"
-    placeholder="nama@email.com"
-    autocomplete="email"
-    required
-  >
+    <label for="loginEmail">Email</label>
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="nama@email.com"
+      autocomplete="email"
+      required
+    />
 
-  <label for="registerPassword">Kata sandi</label>
-  <input
-    id="registerPassword"
-    type="password"
-    placeholder="Minimal 6 karakter"
-    minlength="6"
-    autocomplete="new-password"
-    required
-  >
+    <label for="loginPassword">Password</label>
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Masukkan password"
+      autocomplete="current-password"
+      required
+    />
 
-  <label for="registerPasswordConfirm">Ulangi kata sandi</label>
-  <input
-    id="registerPasswordConfirm"
-    type="password"
-    placeholder="Ulangi kata sandi"
-    minlength="6"
-    autocomplete="new-password"
-    required
-  >
-  <button id="registerButton" type="submit">
-    Daftar sebagai Guru
-  </button>
+    <button type="submit" id="loginButton">
+      MASUK
+    </button>
 
-  <p id="registerMessage" role="status"></p>
-
-  <button id="backToLogin" type="button" class="btn btn-light">
-    Kembali ke Login
-  </button>
-</form>
-
- <section id="loginScreen" class="login-screen">
-
-    <form id="loginForm" class="login-card">
-<p id="showRegisterWrap" style="text-align:center">
-  Belum punya akun Guru?
-<button type="button" id="showRegister">
-  Daftar di sini
-</button>
-</p>
-<div class="login-logo">
-  <img
-    src="./images.png"
-    alt="Logo sekolah"
-  >
-</div>
-      
-<body>
-
-      <h1>E-Absensi Guru SMA</h1>
-      <p>Silakan masuk menggunakan akun yang terdaftar.</p>
-
-      <label for="loginEmail">Email</label>
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="nama@email.com"
-        autocomplete="username"
-        required
-      >
-
-      <label for="loginPassword">Kata Sandi</label>
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Masukkan kata sandi"
-        autocomplete="current-password"
-        required
-      >
-
-      <button id="loginButton" type="submit">
-        Masuk
+    <p>
+      Belum punya akun?
+      <button type="button" id="showRegister">
+        Daftar di sini
       </button>
+    </p>
 
-      <p id="loginMessage" role="status"></p>
-    </form>
-  </section>
+    <p id="loginMessage" role="status" aria-live="polite"></p>
+  </form>
 
+  <form id="registerForm" class="login-card" hidden>
+    <h2>Daftar Akun Guru</h2>
+    <p>Akun baru akan menunggu persetujuan admin.</p>
+
+    <label for="registerNama">Nama lengkap</label>
+    <input
+      id="registerNama"
+      type="text"
+      placeholder="Masukkan nama lengkap"
+      autocomplete="name"
+      required
+    />
+
+    <label for="registerEmail">Email</label>
+    <input
+      id="registerEmail"
+      type="email"
+      placeholder="nama@email.com"
+      autocomplete="email"
+      required
+    />
+
+    <label for="registerPassword">Password</label>
+    <input
+      id="registerPassword"
+      type="password"
+      placeholder="Minimal 6 karakter"
+      autocomplete="new-password"
+      minlength="6"
+      required
+    />
+
+    <button type="submit" id="registerButton">
+      DAFTAR AKUN
+    </button>
+
+    <p>
+      Sudah punya akun?
+      <button type="button" id="showLogin">
+        Kembali ke login
+      </button>
+    </p>
+
+    <p id="registerMessage" role="status" aria-live="polite"></p>
+  </form>
+</section>
   <!-- DASHBOARD LAMA TETAP DIPERTAHANKAN -->
   <div class="app">
 
