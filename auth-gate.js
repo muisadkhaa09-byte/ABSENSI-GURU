@@ -1,141 +1,229 @@
+
 import { auth, db } from "./firebase-config.js";
 
 import {
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 
 import {
   doc,
-  getDoc
+  getDoc,
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 const loginScreen = document.getElementById("loginScreen");
+const appScreen = document.getElementById("appScreen");
+
 const loginForm = document.getElementById("loginForm");
-const loginEmail = document.getElementById("loginEmail");
-const loginPassword = document.getElementById("loginPassword");
-const loginButton = document.getElementById("loginButton");
+const registerForm = document.getElementById("registerForm");
+
+const showRegisterButton = document.getElementById("showRegister");
+const showLoginButton = document.getElementById("showLogin");
+
 const loginMessage = document.getElementById("loginMessage");
-const app = document.querySelector(".app");
+const registerMessage = document.getElementById("registerMessage");
 
-function tampilkanLogin(pesan = "") {
-  app.classList.remove("authenticated");
+const loginButton = document.getElementById("loginButton");
+const registerButton = document.getElementById("registerButton");
+
+let sedangMendaftar = false;
+
+function tampilkanLogin() {
   loginScreen.hidden = false;
-  loginMessage.textContent = pesan;
+  appScreen.hidden = true;
+  loginForm.hidden = false;
+  registerForm.hidden = true;
 }
 
-function tampilkanDashboard(user, role) {
+function tampilkanPendaftaran() {
+  loginScreen.hidden = false;
+  appScreen.hidden = true;
+  loginForm.hidden = true;
+  registerForm.hidden = false;
+}
+
+function tampilkanAplikasi(role) {
   loginScreen.hidden = true;
-  app.classList.add("authenticated");
+  appScreen.hidden = false;
 
-  // Tambahkan informasi akun dan tombol keluar.
-  let areaAkun = document.getElementById("accountArea");
-
-  if (!areaAkun) {
-    areaAkun = document.createElement("div");
-    areaAkun.id = "accountArea";
-    areaAkun.style.marginLeft = "auto";
-    areaAkun.style.display = "flex";
-    areaAkun.style.alignItems = "center";
-    areaAkun.style.gap = "10px";
-    areaAkun.style.flexWrap = "wrap";
-
-    document.querySelector(".topbar").appendChild(areaAkun);
-  }
-
-  areaAkun.replaceChildren();
-
-  const info = document.createElement("span");
-  info.textContent = `${user.email} • ${role.toUpperCase()}`;
-
-  const tombolKeluar = document.createElement("button");
-  tombolKeluar.type = "button";
-  tombolKeluar.className = "btn btn-light";
-  tombolKeluar.textContent = "Keluar";
-
-  tombolKeluar.addEventListener("click", async () => {
-    await signOut(auth);
-  });
-
-  areaAkun.append(info, tombolKeluar);
+  console.info("Login berhasil. Role:", role);
 }
 
+function pesanLogin(teks) {
+  loginMessage.textContent = teks;
+}
+
+function pesanDaftar(teks) {
+  registerMessage.textContent = teks;
+}
+
+function pesanError(error) {
+  const kode = error?.code || "";
+
+  const pesan = {
+    "auth/invalid-email": "Format email tidak valid.",
+    "auth/invalid-credential": "Email atau password salah.",
+    "auth/user-not-found": "Akun tidak ditemukan.",
+    "auth/wrong-password": "Password salah.",
+    "auth/email-already-in-use": "Email sudah terdaftar.",
+    "auth/weak-password": "Password minimal 6 karakter.",
+    "auth/too-many-requests":
+      "Terlalu banyak percobaan. Coba lagi nanti.",
+    "auth/network-request-failed":
+      "Koneksi internet bermasalah."
+  };
+
+  return pesan[kode] || error?.message || "Terjadi kesalahan.";
+}
+
+// Berpindah formulir tanpa mengirim data login.
+showRegisterButton.addEventListener("click", () => {
+  pesanDaftar("");
+  tampilkanPendaftaran();
+});
+
+showLoginButton.addEventListener("click", () => {
+  pesanLogin("");
+  tampilkanLogin();
+});
+
+// Login menggunakan Firebase Authentication.
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const email = loginEmail.value.trim();
-  const password = loginPassword.value;
-
   loginButton.disabled = true;
-  loginButton.textContent = "Memeriksa akun...";
-  loginMessage.textContent = "";
+  pesanLogin("Sedang memeriksa akun...");
+
+  const email = document.getElementById("loginEmail")
+    .value.trim();
+
+  const password = document.getElementById("loginPassword")
+    .value;
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    // Status login dan role diperiksa oleh onAuthStateChanged.
+    pesanLogin("Login berhasil. Memeriksa hak akses...");
   } catch (error) {
     console.error("Login gagal:", error);
-
-    const pesan = {
-      "auth/invalid-credential":
-        "Email atau kata sandi salah.",
-      "auth/invalid-email":
-        "Format email tidak valid.",
-      "auth/too-many-requests":
-        "Terlalu banyak percobaan. Coba lagi nanti.",
-      "auth/network-request-failed":
-        "Koneksi internet bermasalah."
-    };
-
-    loginMessage.textContent =
-      pesan[error.code] || "Login gagal. Periksa akun dan koneksi internet.";
+    pesanLogin(pesanError(error));
   } finally {
     loginButton.disabled = false;
-    loginButton.textContent = "Masuk";
   }
 });
 
+// Pendaftaran akun guru.
+// Role guru tidak langsung mendapat akses sebelum disetujui admin.
+registerForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  registerButton.disabled = true;
+  sedangMendaftar = true;
+  pesanDaftar("Sedang membuat akun...");
+
+  const nama = document.getElementById("registerNama")
+    .value.trim();
+
+  const email = document.getElementById("registerEmail")
+    .value.trim();
+
+  const password = document.getElementById("registerPassword")
+    .value;
+
+  try {
+    const hasil = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    await setDoc(doc(db, "users", hasil.user.uid), {
+      nama,
+      email,
+      role: "guru",
+      approved: false,
+      createdAt: serverTimestamp()
+    });
+
+    await signOut(auth);
+
+    registerForm.reset();
+    tampilkanLogin();
+
+    pesanLogin(
+      "Pendaftaran berhasil. Silakan menunggu persetujuan admin."
+    );
+  } catch (error) {
+    console.error("Pendaftaran gagal:", error);
+    pesanDaftar(pesanError(error));
+
+    // Jika akun sudah dibuat tetapi penyimpanan profil gagal,
+    // jangan menganggap pendaftaran berhasil.
+    if (auth.currentUser) {
+      try {
+        await signOut(auth);
+      } catch (signOutError) {
+        console.error("Gagal keluar:", signOutError);
+      }
+    }
+  } finally {
+    sedangMendaftar = false;
+    registerButton.disabled = false;
+  }
+});
+
+// Memeriksa sesi login dan role pada Firestore.
 onAuthStateChanged(auth, async (user) => {
+  if (sedangMendaftar) return;
+
   if (!user) {
     tampilkanLogin();
     return;
   }
 
   try {
-    // Profil harus dibuat oleh Admin di Firestore.
     const profilRef = doc(db, "users", user.uid);
     const profilSnap = await getDoc(profilRef);
 
     if (!profilSnap.exists()) {
-      await signOut(auth);
-      tampilkanLogin(
-        "Akun belum memiliki profil yang disetujui Admin."
+      tampilkanLogin();
+      pesanLogin(
+        "Profil akses tidak ditemukan. Hubungi admin."
       );
+      await signOut(auth);
       return;
     }
 
     const profil = profilSnap.data();
     const role = String(profil.role || "").toLowerCase();
 
-    if (
-      !["admin", "guru"].includes(role) ||
-      profil.approved !== true
-    ) {
+    if (role !== "admin" && role !== "guru") {
+      tampilkanLogin();
+      pesanLogin("Role akun tidak valid. Hubungi admin.");
       await signOut(auth);
-      tampilkanLogin(
-        "Akun belum disetujui atau tidak memiliki peran yang valid."
-      );
       return;
     }
 
-    tampilkanDashboard(user, role);
-  } catch (error) {
-    console.error("Pemeriksaan profil gagal:", error);
+    if (profil.approved !== true) {
+      tampilkanLogin();
+      pesanLogin(
+        role === "guru"
+          ? "Akun guru masih menunggu persetujuan admin."
+          : "Akun belum disetujui."
+      );
+      await signOut(auth);
+      return;
+    }
 
-    await signOut(auth);
-    tampilkanLogin(
-      "Profil tidak dapat diperiksa. Periksa aturan keamanan Firestore."
+    tampilkanAplikasi(role);
+  } catch (error) {
+    console.error("Pemeriksaan akses gagal:", error);
+    tampilkanLogin();
+    pesanLogin(
+      "Gagal memeriksa akses. Periksa koneksi dan aturan Firestore."
     );
   }
 });
