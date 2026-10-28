@@ -61,22 +61,39 @@ img {
    LOGIN
 ===================================== */
 
+
 .login-screen {
-  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background:
-    radial-gradient(
-      circle at top left,
-      #d5ecdd 0,
-      transparent 45%
-    ),
-    var(--green-light);
+  box-sizing: border-box;
+  overflow-y: auto;
+  background: #eaf5ee;
 }
 
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+[hidden] {
+  display: none !important;
+}
 .login-card {
   display: flex;
   flex-direction: column;
