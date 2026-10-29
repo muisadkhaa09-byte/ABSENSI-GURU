@@ -64,56 +64,50 @@ function pesanDaftar(teks) {
 function pesanError(error) {
   const kode = error?.code || "";
 
+  console.error("Firebase Auth error:", {
+    code: kode,
+    message: error?.message
+  });
+
   const pesan = {
-    "auth/invalid-email": "Format email tidak valid.",
-    "auth/invalid-credential": "Email atau password salah.",
-    "auth/user-not-found": "Akun tidak ditemukan.",
-    "auth/wrong-password": "Password salah.",
-    "auth/email-already-in-use": "Email sudah terdaftar.",
-    "auth/weak-password": "Password minimal 6 karakter.",
+    "auth/invalid-email":
+      "Format email tidak valid. Periksa kembali email kamu.",
+
+    "auth/invalid-credential":
+      "Email atau password salah. Periksa akun Firebase kamu.",
+
+    "auth/user-not-found":
+      "Akun tidak ditemukan di Firebase Authentication.",
+
+    "auth/wrong-password":
+      "Password salah. Coba periksa kembali.",
+
     "auth/too-many-requests":
-      "Terlalu banyak percobaan. Coba lagi nanti.",
+      "Firebase membatasi percobaan login sementara. Coba lagi nanti.",
+
     "auth/network-request-failed":
-      "Koneksi internet bermasalah."
+      "Koneksi internet bermasalah. Periksa jaringan kamu.",
+
+    "auth/operation-not-allowed":
+      "Metode Email/Password belum diaktifkan di Firebase.",
+
+    "auth/invalid-api-key":
+      "API key Firebase tidak valid. Periksa firebase-config.js.",
+
+    "auth/app-not-authorized":
+      "Domain website belum diizinkan di pengaturan Firebase.",
+
+    "auth/user-disabled":
+      "Akun ini dinonaktifkan di Firebase Authentication.",
+
+    "permission-denied":
+      "Akses Firestore ditolak. Periksa Firestore Rules."
   };
 
-  return pesan[kode] || error?.message || "Terjadi kesalahan.";
+  return pesan[kode] ||
+    `Login gagal (${kode || "error tidak diketahui"}). ${error?.message || "Periksa Console untuk detail."}`;
 }
 
-// Berpindah formulir tanpa mengirim data login.
-showRegisterButton.addEventListener("click", () => {
-  pesanDaftar("");
-  tampilkanPendaftaran();
-});
-
-showLoginButton.addEventListener("click", () => {
-  pesanLogin("");
-  tampilkanLogin();
-});
-
-// Login menggunakan Firebase Authentication.
-loginForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  loginButton.disabled = true;
-  pesanLogin("Sedang memeriksa akun...");
-
-  const email = document.getElementById("loginEmail")
-    .value.trim();
-
-  const password = document.getElementById("loginPassword")
-    .value;
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    pesanLogin("Login berhasil. Memeriksa hak akses...");
-  } catch (error) {
-    console.error("Login gagal:", error);
-    pesanLogin(pesanError(error));
-  } finally {
-    loginButton.disabled = false;
-  }
-});
 
 // Pendaftaran akun guru.
 // Role guru tidak langsung mendapat akses sebelum disetujui admin.
